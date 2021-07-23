@@ -1,0 +1,204 @@
+BEGIN;
+
+
+CREATE TABLE IF NOT EXISTS public.actor
+(
+    name character varying(45),
+    last_name character varying(45),
+    gender character varying(45) NOT NULL,
+    id integer NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.cash_fee
+(
+    id integer NOT NULL,
+    money integer NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.category
+(
+    id integer NOT NULL,
+    name character varying(45) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.country
+(
+    id integer NOT NULL,
+    name character varying(45) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.country_film
+(
+    country_id integer NOT NULL,
+    film_id integer NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.film
+(
+    id integer NOT NULL,
+    name character varying(45) NOT NULL,
+    age_category integer NOT NULL,
+    rating double precision NOT NULL,
+    director character varying(45) NOT NULL,
+    writer character varying(45) NOT NULL,
+    date_release date NOT NULL,
+    category_id integer,
+    cash_fee_id integer,
+    type_id integer,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.film_actor
+(
+    film_id integer NOT NULL,
+    actor_id integer NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.film_user
+(
+    film_id integer NOT NULL,
+    user_id integer NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.type
+(
+    id integer NOT NULL,
+    name character varying(45) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public."user"
+(
+    id integer NOT NULL,
+    name character varying(45) NOT NULL,
+    last_name character varying(45) NOT NULL,
+    age integer NOT NULL,
+    comment character varying(200) NOT NULL,
+    given_point double precision NOT NULL,
+    PRIMARY KEY (id)
+);
+
+ALTER TABLE public.category
+    ADD FOREIGN KEY (id)
+    REFERENCES public.film (id)
+    NOT VALID;
+
+
+ALTER TABLE public.category
+    ADD FOREIGN KEY (id)
+    REFERENCES public.film (id)
+    NOT VALID;
+
+
+ALTER TABLE public.country_film
+    ADD FOREIGN KEY (country_id)
+    REFERENCES public.country (id)
+    NOT VALID;
+
+
+ALTER TABLE public.country_film
+    ADD FOREIGN KEY (country_id)
+    REFERENCES public.country (id)
+    NOT VALID;
+
+
+ALTER TABLE public.country_film
+    ADD FOREIGN KEY (film_id)
+    REFERENCES public.film (id)
+    NOT VALID;
+
+
+ALTER TABLE public.country_film
+    ADD FOREIGN KEY (film_id)
+    REFERENCES public.film (id)
+    NOT VALID;
+
+
+ALTER TABLE public.film
+    ADD FOREIGN KEY (cash_fee_id)
+    REFERENCES public.film (id)
+    NOT VALID;
+
+
+ALTER TABLE public.film
+    ADD FOREIGN KEY (category_id)
+    REFERENCES public.category (id)
+    NOT VALID;
+
+
+ALTER TABLE public.film
+    ADD FOREIGN KEY (id)
+    REFERENCES public.category (id)
+    NOT VALID;
+
+
+ALTER TABLE public.film
+    ADD FOREIGN KEY (type_id)
+    REFERENCES public.type (id)
+    NOT VALID;
+
+
+ALTER TABLE public.film_actor
+    ADD FOREIGN KEY (actor_id)
+    REFERENCES public.actor (id)
+    NOT VALID;
+
+
+ALTER TABLE public.film_actor
+    ADD FOREIGN KEY (actor_id)
+    REFERENCES public.actor (id)
+    NOT VALID;
+
+
+ALTER TABLE public.film_actor
+    ADD FOREIGN KEY (film_id)
+    REFERENCES public.film (id)
+    NOT VALID;
+
+
+ALTER TABLE public.film_actor
+    ADD FOREIGN KEY (film_id)
+    REFERENCES public.film (id)
+    NOT VALID;
+
+
+ALTER TABLE public.film_user
+    ADD FOREIGN KEY (film_id)
+    REFERENCES public.film (id)
+    NOT VALID;
+
+
+ALTER TABLE public.film_user
+    ADD FOREIGN KEY (film_id)
+    REFERENCES public.film (id)
+    NOT VALID;
+
+
+ALTER TABLE public.film_user
+    ADD FOREIGN KEY (user_id)
+    REFERENCES public."user" (id)
+    NOT VALID;
+
+
+ALTER TABLE public.film_user
+    ADD FOREIGN KEY (user_id)
+    REFERENCES public."user" (id)
+    NOT VALID;
+
+
+ALTER TABLE public.type
+    ADD FOREIGN KEY (id)
+    REFERENCES public.film (id)
+    NOT VALID;
+
+
+ALTER TABLE public.type
+    ADD FOREIGN KEY (id)
+    REFERENCES public.film (id)
+    NOT VALID;
+
+END;
