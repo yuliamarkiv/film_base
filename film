@@ -1,6 +1,18 @@
-BEGIN;
 
 
+CREATE TABLE IF NOT EXISTS public.film
+(
+    id integer NOT NULL,
+    name character varying(45) NOT NULL,
+    age_category integer NOT NULL,
+    rating double precision NOT NULL,
+    director character varying(45) NOT NULL,
+    writer character varying(45) NOT NULL,
+    date_release date NOT NULL,
+    cash_fee_id integer,
+    type_id integer,
+    PRIMARY KEY (id)
+);
 CREATE TABLE IF NOT EXISTS public.actor
 (
     name character varying(45),
@@ -17,13 +29,6 @@ CREATE TABLE IF NOT EXISTS public.cash_fee
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS public.category
-(
-    id integer NOT NULL,
-    name character varying(45) NOT NULL,
-    PRIMARY KEY (id)
-);
-
 CREATE TABLE IF NOT EXISTS public.country
 (
     id integer NOT NULL,
@@ -37,20 +42,7 @@ CREATE TABLE IF NOT EXISTS public.country_film
     film_id integer NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS public.film
-(
-    id integer NOT NULL,
-    name character varying(45) NOT NULL,
-    age_category integer NOT NULL,
-    rating double precision NOT NULL,
-    director character varying(45) NOT NULL,
-    writer character varying(45) NOT NULL,
-    date_release date NOT NULL,
-    category_id integer,
-    cash_fee_id integer,
-    type_id integer,
-    PRIMARY KEY (id)
-);
+
 
 CREATE TABLE IF NOT EXISTS public.film_actor
 (
@@ -82,18 +74,6 @@ CREATE TABLE IF NOT EXISTS public."user"
     PRIMARY KEY (id)
 );
 
-ALTER TABLE public.category
-    ADD FOREIGN KEY (id)
-    REFERENCES public.film (id)
-    NOT VALID;
-
-
-ALTER TABLE public.category
-    ADD FOREIGN KEY (id)
-    REFERENCES public.film (id)
-    NOT VALID;
-
-
 ALTER TABLE public.country_film
     ADD FOREIGN KEY (country_id)
     REFERENCES public.country (id)
@@ -121,18 +101,6 @@ ALTER TABLE public.country_film
 ALTER TABLE public.film
     ADD FOREIGN KEY (cash_fee_id)
     REFERENCES public.film (id)
-    NOT VALID;
-
-
-ALTER TABLE public.film
-    ADD FOREIGN KEY (category_id)
-    REFERENCES public.category (id)
-    NOT VALID;
-
-
-ALTER TABLE public.film
-    ADD FOREIGN KEY (id)
-    REFERENCES public.category (id)
     NOT VALID;
 
 
